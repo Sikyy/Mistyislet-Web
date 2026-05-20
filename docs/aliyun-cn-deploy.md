@@ -33,8 +33,9 @@ npm run build:cn
 dist
 ```
 
-8. Add an `OSS 上传` step after the build task.
-9. Upload `dist` to the OSS bucket root.
+8. Upload `dist` to the OSS bucket root:
+   - If your Flow organization has an OSS upload/deploy step, use that.
+   - If it does not, keep Flow responsible for building and uploading the artifact first, then use OSS/OOS or an `ossutil` script as the deployment step.
 
 ## OSS SPA Settings
 
