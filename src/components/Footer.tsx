@@ -5,6 +5,8 @@ import { useI18n } from "../i18n";
 export function Footer() {
   const { t } = useI18n();
   const icpRecord = import.meta.env.VITE_ICP_RECORD?.trim();
+  const companyName =
+    import.meta.env.VITE_SITE_REGION === "cn" ? "杭州烟渚科技有限公司" : "Hangzhou Yanzhu Technology Co., Ltd";
   const socialLinks = [
     { label: "X", icon: X },
     { label: "Discord", icon: Gamepad2 },
@@ -39,6 +41,7 @@ export function Footer() {
             })}
           </div>
           <div className="mt-16 grid gap-2 text-[13px] text-white/42">
+            <p>{companyName}</p>
             <p>{t(footer.copyright)}</p>
             {icpRecord ? (
               <a
