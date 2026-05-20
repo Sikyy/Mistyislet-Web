@@ -1,0 +1,48 @@
+name: Deploy CN Site
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy-cn:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    env:
+      ALIYUN_HOST: ${{ secrets.ALIYUN_HOST }}
+      ALIYUN_PORT: ${{ secrets.ALIYUN_PORT }}
+      ALIYUN_USER: ${{ secrets.ALIYUN_USER }}
+      WEB_ROOT: /var/www/mistyislet.cn
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build CN site
+        run: npm run build:cn
+
+      - name: Prepare SSH
+        run: |
+          mkdir -p ~/.ssh
+          printf '%s\n' "${{ secrets.ALIYUN_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          ssh-keyscan -p "$ALIYUN_PORT" "$ALIYUN_HOST" >> ~/.ssh/known_hosts
+
+      - name: Upload dist to Aliyun ECS
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -p "$ALIYUN_PORT" "$ALIYUN_USER@$ALIYUN_HOST" "mkdir -p $WEB_ROOT"
+          rsync -az --delete -e "ssh -i ~/.ssh/id_ed25519 -p $ALIYUN_PORT" dist/ "$ALIYUN_USER@$ALIYUN_HOST:$WEB_ROOT/"
+
+      - name: Reload Nginx
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -p "$ALIYUN_PORT" "$ALIYUN_USER@$ALIYUN_HOST" "nginx -t && systemctl reload nginx"
