@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #0d0d0c;
+  color: #f7f4ee;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  overscroll-behavior-y: none;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  overflow-x: hidden;
+  background: #0d0d0c;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid #62b7a8;
+  outline-offset: 3px;
+}
+
+::selection {
+  background: rgba(98, 183, 168, 0.32);
+  color: #ffffff;
+}
+
+.site-noise {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  background-image: url("/assets/framer-noise.png");
+  background-repeat: repeat;
+  background-size: 154px 154px;
+}
+
+.section-shell {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  padding: 132px 0;
+  background: #0d0d0c;
+}
+
+.section-inner {
+  width: min(1080px, calc(100% - 40px));
+  margin: 0 auto;
+}
+
+.soft-border {
+  border: 1px solid rgba(255, 255, 255, 0.17);
+}
+
+.panel-surface {
+  background: rgba(255, 255, 255, 0.018);
+}
+
+.hero-visual {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(13, 13, 12, 0.04) 0%, rgba(13, 13, 12, 0.2) 44%, rgba(13, 13, 12, 0.9) 100%),
+    url("/assets/framer-hero.png") center center / cover no-repeat;
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+@media (max-width: 900px) {
+  .section-shell {
+    padding: 96px 0;
+  }
+
+  .section-inner {
+    width: min(100% - 32px, 720px);
+  }
+
+}
+
+@media (max-width: 640px) {
+  .section-shell {
+    padding: 72px 0;
+  }
+
+  .section-inner {
+    width: min(100% - 28px, 520px);
+  }
+
+}
