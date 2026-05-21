@@ -4,6 +4,56 @@ export type SecondaryPageSection = {
   items: string[];
 };
 
+export type SecondaryPageValueProp = {
+  title: string;
+  body: string;
+  visual?: "mobile-unlock" | "door-feedback" | "cloud-control";
+};
+
+export type SecondaryPageMetric = {
+  value: string;
+  label: string;
+};
+
+export type SecondaryPageDeviceShowcase = {
+  eyebrow: string;
+  title: string;
+  body: string;
+  visual: "reader" | "gateway";
+  points: string[];
+  specs: { label: string; value: string }[];
+};
+
+export type SecondaryPageSpecGroup = {
+  title: string;
+  rows: { label: string; value: string }[];
+};
+
+export type SecondaryPageFaq = {
+  question: string;
+  answer: string;
+};
+
+export type SecondaryPageFeatureBlock = {
+  eyebrow: string;
+  title: string;
+  body: string;
+  items: string[];
+  image: string;
+};
+
+export type SecondaryPageProductHero = {
+  tagline: string;
+  subtitle: string;
+  visual: "reader" | "gateway";
+};
+
+export type SecondaryPageProductBlueprint = {
+  title: string;
+  visual: "reader" | "gateway";
+  dimensions: { label: string; value: string }[];
+};
+
 export type SecondaryPage = {
   path: string;
   category: string;
@@ -12,37 +62,18 @@ export type SecondaryPage = {
   image: string;
   highlights: string[];
   sections: SecondaryPageSection[];
-  related: { label: string; href: string }[];
+  valueProps?: SecondaryPageValueProp[];
+  featureBlocks?: SecondaryPageFeatureBlock[];
+  productHero?: SecondaryPageProductHero;
+  productBlueprint?: SecondaryPageProductBlueprint;
+  deviceShowcase?: SecondaryPageDeviceShowcase;
+  metrics?: SecondaryPageMetric[];
+  specGroups?: SecondaryPageSpecGroup[];
+  faqs?: SecondaryPageFaq[];
 };
-
-const productRelated = [
-  { label: "Misty Reader", href: "/product/misty-reader" },
-  { label: "Misty Edge Gateway", href: "/product/misty-edge-gateway" },
-  { label: "Misty Cloud", href: "/product/misty-cloud" },
-];
-
-const solutionRelated = [
-  { label: "Cloud SaaS", href: "/solutions/cloud-saas" },
-  { label: "Mobile Access Control", href: "/solutions/mobile-access-control" },
-  { label: "API Reference", href: "/resources/api-reference" },
-];
-
-const resourceRelated = [
-  { label: "Docs", href: "/resources/docs" },
-  { label: "API Reference", href: "/resources/api-reference" },
-  { label: "Deployment Guide", href: "/resources/deployment-guide" },
-  { label: "Security Notes", href: "/resources/security-notes" },
-];
-
-const partnerRelated = [
-  { label: "Hardware partners", href: "/partners/hardware/hikvision" },
-  { label: "Software partners", href: "/partners/software/hr-saas" },
-  { label: "Become our partner", href: "/partners/become-our-partner" },
-];
 
 const useCasePages: SecondaryPage[] = [
   ["factories", "Factories", "Control access across shifts, production zones, and restricted areas."],
-  ["coworking", "Coworking", "Manage members, guests, meeting rooms, and shared-space access from the cloud."],
   ["fitness-gyms", "Fitness & Gyms", "Give members mobile access while keeping staff, rooms, and service areas controlled."],
   ["office-buildings", "Office Buildings", "Unify tenant access, lobby flows, elevators, and operator oversight."],
   ["schools", "Schools", "Coordinate staff, student, visitor, and after-hours access with clear audit trails."],
@@ -66,7 +97,6 @@ const useCasePages: SecondaryPage[] = [
       items: ["Door and gateway status", "Searchable unlock events", "Fast access revocation"],
     },
   ],
-  related: solutionRelated,
 }));
 
 export const secondaryPages: SecondaryPage[] = [
@@ -77,19 +107,92 @@ export const secondaryPages: SecondaryPage[] = [
     intro: "A door reader for NFC, BLE, QR, card, and mobile credential workflows.",
     image: "/assets/framer-final.png",
     highlights: ["NFC and BLE", "QR access", "Mobile credentials"],
-    sections: [
+    sections: [],
+    valueProps: [
       {
-        title: "At the door",
-        body: "Misty Reader is the user-facing access point for modern buildings and shared spaces.",
-        items: ["Supports card and phone-first access", "Works with time-bound visitor credentials", "Designed for reader and gateway deployments"],
+        title: "Credential flexibility",
+        body: "Support phone-first access while keeping cards and QR passes available for sites that still need them.",
+        visual: "mobile-unlock",
       },
       {
-        title: "Managed from Misty Cloud",
-        body: "Reader behavior is configured from the same cloud console that manages users, doors, and events.",
-        items: ["Credential lifecycle controls", "Door-level configuration", "Event visibility after unlock attempts"],
+        title: "Clear door experience",
+        body: "Give users a predictable reader interaction at entries, rooms, turnstiles, and shared spaces.",
+        visual: "door-feedback",
+      },
+      {
+        title: "Cloud-managed behavior",
+        body: "Configure reader rules, feedback, and event visibility from Misty Cloud instead of isolated device tools.",
+        visual: "cloud-control",
       },
     ],
-    related: productRelated,
+    featureBlocks: [
+      {
+        eyebrow: "At the entrance",
+        title: "A familiar tap point at every door",
+        body: "Misty Reader gives staff and visitors a clear, predictable surface for presenting credentials — whether tapping a phone, holding up a card, or scanning a QR pass.",
+        items: ["Compact wall-mounted form factor", "LED feedback for granted and denied access", "Designed for indoor and sheltered placements"],
+        image: "/assets/framer-panel-01.jpg",
+      },
+      {
+        eyebrow: "Multi-credential",
+        title: "Phone, card, and QR — one reader surface",
+        body: "Sites can start with cards and add mobile credentials when ready, or go phone-first from day one. The reader handles the credential mix each door needs.",
+        items: ["NFC for phone and card tap", "BLE for hands-free mobile unlock", "QR scanning for visitor and temporary passes"],
+        image: "/assets/framer-panel-02.jpg",
+      },
+    ],
+    productHero: {
+      tagline: "Compact design, clear interaction.",
+      subtitle: "A wall-mounted reader built for phone-first credential workflows at every door.",
+      visual: "reader",
+    },
+    productBlueprint: {
+      title: "Product dimensions",
+      visual: "reader",
+      dimensions: [
+        { label: "Height", value: "122 mm (4.8″)" },
+        { label: "Width", value: "50 mm (2.0″)" },
+        { label: "Depth", value: "15 mm (0.6″)" },
+      ],
+    },
+    specGroups: [
+      {
+        title: "Dimensions",
+        rows: [
+          { label: "Height", value: "122 mm (4.8″)" },
+          { label: "Width", value: "50 mm (2.0″)" },
+          { label: "Depth", value: "15 mm (0.6″)" },
+          { label: "Weight", value: "85 g" },
+          { label: "Mounting", value: "Wall-mount, flush or surface" },
+        ],
+      },
+      {
+        title: "Credentials",
+        rows: [
+          { label: "NFC", value: "Mifare DESFire EV1/EV2/EV3, Mifare Classic, NTAG" },
+          { label: "BLE", value: "iOS and Android mobile credentials" },
+          { label: "QR", value: "Time-bound visitor and temporary passes" },
+          { label: "Card", value: "13.56 MHz high-frequency contactless" },
+        ],
+      },
+      {
+        title: "Communication",
+        rows: [
+          { label: "Interface", value: "Wiegand 26/34, RS-485" },
+          { label: "Edge link", value: "Connects to Misty Edge Gateway" },
+          { label: "Read range", value: "NFC up to 40 mm, BLE up to 50 mm" },
+        ],
+      },
+      {
+        title: "Environment",
+        rows: [
+          { label: "Protection", value: "IP54, indoor and sheltered outdoor" },
+          { label: "Operating temp", value: "−20 °C to +55 °C" },
+          { label: "Power", value: "12 V DC via gateway or direct supply" },
+          { label: "Indicator", value: "RGB LED ring and audible feedback" },
+        ],
+      },
+    ],
   },
   {
     path: "/product/misty-edge-gateway",
@@ -110,7 +213,35 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Real-time event forwarding", "Remote rule updates", "Multi-site device visibility"],
       },
     ],
-    related: productRelated,
+    deviceShowcase: {
+      eyebrow: "Device overview",
+      title: "A local gateway for reliable door control.",
+      body: "Install Misty Edge Gateway near the door hardware so access stays responsive while events continue flowing back to the cloud.",
+      visual: "gateway",
+      points: ["Local access decisions", "Offline event queue", "Door and reader heartbeat"],
+      specs: [
+        { label: "Control role", value: "Local door decision and event relay" },
+        { label: "Offline behavior", value: "Cached rules and queued events" },
+        { label: "Cloud sync", value: "Events, status, and configuration updates" },
+        { label: "Best for", value: "Entrances, rooms, gates, and controlled zones" },
+        { label: "Managed by", value: "Misty Cloud" },
+      ],
+    },
+    metrics: [
+      { value: "Edge", label: "Door decisions stay close to the site" },
+      { value: "Queue", label: "Events wait during unstable networks" },
+      { value: "Sync", label: "Status returns to the cloud" },
+    ],
+    faqs: [
+      {
+        question: "Why does a site need an edge gateway?",
+        answer: "The gateway keeps door behavior responsive and gives each reader a local layer for access decisions and event buffering.",
+      },
+      {
+        question: "Can the gateway keep doors working during network interruptions?",
+        answer: "Yes. The gateway can use cached access rules and queue events so the site does not depend on a constant cloud round trip.",
+      },
+    ],
   },
   {
     path: "/product/misty-cloud",
@@ -131,7 +262,6 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Event search", "Admin audit trail", "API and webhook integration"],
       },
     ],
-    related: productRelated,
   },
   {
     path: "/solutions/cloud-saas",
@@ -152,7 +282,6 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Webhooks", "API reference", "Identity and HR workflow support"],
       },
     ],
-    related: solutionRelated,
   },
   {
     path: "/solutions/mobile-access-control",
@@ -173,9 +302,68 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Tenant and staff access", "Guest and visitor workflows", "Central event visibility"],
       },
     ],
-    related: solutionRelated,
   },
   ...useCasePages,
+  {
+    path: "/use-cases/coworking",
+    category: "Use case",
+    title: "Coworking",
+    intro: "Manage members, guests, meeting rooms, and shared-space access from the cloud.",
+    image: "/assets/framer-final.png",
+    highlights: ["24/7 member access", "Guest passes", "Room-level control"],
+    sections: [
+      {
+        title: "Membership access",
+        body: "Connect membership status, plans, and schedules to the doors people use every day.",
+        items: ["Member groups", "Plan-based permissions", "Automatic access changes"],
+      },
+      {
+        title: "Shared-space operations",
+        body: "Keep front doors, meeting rooms, private offices, and back-of-house areas in one operating view.",
+        items: ["Door and zone visibility", "Visitor and guest access", "Event search for disputes"],
+      },
+    ],
+    valueProps: [
+      {
+        title: "Let members arrive without staff handoffs",
+        body: "Give members access that follows their plan, schedule, and space permissions.",
+      },
+      {
+        title: "Keep guest access temporary",
+        body: "Issue short-lived QR or mobile passes for visitors, interviews, and booked meeting rooms.",
+      },
+      {
+        title: "See what happened after hours",
+        body: "Review door activity, failed unlock attempts, and admin changes in one timeline.",
+      },
+    ],
+    metrics: [
+      { value: "24/7", label: "Access for eligible members" },
+      { value: "1", label: "Cloud view for doors and events" },
+      { value: "QR", label: "Temporary guest access" },
+    ],
+    specGroups: [
+      {
+        title: "Coworking access model",
+        rows: [
+          { label: "Users", value: "Members, teams, staff, guests, cleaners, and vendors" },
+          { label: "Doors", value: "Main entry, meeting rooms, private offices, amenities, and service zones" },
+          { label: "Rules", value: "Plan-based access, time windows, temporary passes, and revocation" },
+          { label: "Integrations", value: "Coworking apps, HR tools, identity systems, and event webhooks" },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "Can members access the space outside staffed hours?",
+        answer: "Yes. Eligible members can receive mobile or card credentials with schedules that match their membership plan and site policy.",
+      },
+      {
+        question: "Can guest access expire automatically?",
+        answer: "Yes. Visitor passes can be time-bound so temporary access does not become a permanent operational risk.",
+      },
+    ],
+  },
   {
     path: "/resources/docs",
     category: "Resources",
@@ -195,7 +383,6 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Door inventory", "Reader and gateway mapping", "Launch checklist"],
       },
     ],
-    related: resourceRelated,
   },
   {
     path: "/resources/api-reference",
@@ -216,7 +403,6 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Provisioning workflows", "Event subscriptions", "Revocation and lifecycle automation"],
       },
     ],
-    related: resourceRelated,
   },
   {
     path: "/resources/deployment-guide",
@@ -237,7 +423,6 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Gateway commissioning", "Reader validation", "Operator handover"],
       },
     ],
-    related: resourceRelated,
   },
   {
     path: "/resources/security-notes",
@@ -258,7 +443,6 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Immediate revocation", "Temporary credentials", "Event review"],
       },
     ],
-    related: resourceRelated,
   },
   ...[
     ["hikvision", "Hikvision", "Camera and building-security hardware ecosystem."],
@@ -284,7 +468,6 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Access rules in Misty Cloud", "Gateway and reader visibility", "Event audit"],
       },
     ],
-    related: partnerRelated,
   })),
   ...[
     ["hr-saas", "HR SaaS", "Provision and revoke access from employee lifecycle systems."],
@@ -310,7 +493,6 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Automated provisioning", "Fast revocation", "Cross-system visibility"],
       },
     ],
-    related: partnerRelated,
   })),
   {
     path: "/partners/become-our-partner",
@@ -331,7 +513,46 @@ export const secondaryPages: SecondaryPage[] = [
         items: ["Shared deployment planning", "Technical enablement", "Case studies and co-selling"],
       },
     ],
-    related: partnerRelated,
+    valueProps: [
+      {
+        title: "Hardware ecosystem",
+        body: "Bring readers, cameras, attendance, biometric, and site hardware into coherent access deployments.",
+      },
+      {
+        title: "Software integrations",
+        body: "Connect HR, identity, visitor, property, and operations software to physical access decisions.",
+      },
+      {
+        title: "Deployment partners",
+        body: "Help customers plan wiring, commissioning, rollout, training, and long-term support.",
+      },
+    ],
+    metrics: [
+      { value: "HW", label: "Readers, cameras, attendance, and biometrics" },
+      { value: "API", label: "HR, identity, visitor, and ops integrations" },
+      { value: "SI", label: "Installation and channel partners" },
+    ],
+    specGroups: [
+      {
+        title: "Good-fit partners",
+        rows: [
+          { label: "Hardware", value: "Access devices, video security, attendance, biometric, and building hardware vendors" },
+          { label: "Software", value: "HR SaaS, identity, SSO, visitor, property, and operations platforms" },
+          { label: "Services", value: "Installers, security integrators, managed service providers, and regional channels" },
+          { label: "Support", value: "Shared planning, validation, deployment notes, and launch support" },
+        ],
+      },
+    ],
+    faqs: [
+      {
+        question: "What kinds of partners should work with Mistyislet?",
+        answer: "Hardware vendors, software platforms, installers, security integrators, and channel partners can all fit when the partnership improves deployment and daily access operations.",
+      },
+      {
+        question: "Do partners need an existing integration before reaching out?",
+        answer: "No. A partner conversation can start with a customer use case, an API workflow, a hardware compatibility review, or an installation opportunity.",
+      },
+    ],
   },
 ];
 
